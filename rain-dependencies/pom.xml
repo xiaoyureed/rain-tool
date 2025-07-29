@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--  Don't do this, or you'll get an cycle error  -->
+    <!--    <parent>-->
+    <!--        <artifactId>rain-tool</artifactId>-->
+    <!--        <groupId>org.eu.rainx0</groupId>-->
+    <!--        <version>1.0-SNAPSHOT</version>-->
+    <!--    </parent>-->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.eu.rainx0</groupId>
+    <artifactId>rain-dependencies</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring-boot.version>3.1.0</spring-boot.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <dubbo.version>3.2.2</dubbo.version>
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <skywalking.version>8.6.0</skywalking.version>
+        <springdoc.version>2.1.0</springdoc.version>
+        <common-lang3.version>3.12.0</common-lang3.version>
+        <commons-io.version>2.13.0</commons-io.version>
+        <swagger-annotations-jakarta.version>2.2.9</swagger-annotations-jakarta.version>
+        <tomcat-servlet-api.version>10.1.8</tomcat-servlet-api.version>
+        <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
+        <mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>
+        <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
+        <druid-spring-boot-starter.version>1.2.18</druid-spring-boot-starter.version>
+        <datafaker.version>1.9.0</datafaker.version>
+        <testcontainer.version>1.18.0</testcontainer.version>
+        <redisson-spring-boot-starter.version>3.22.0</redisson-spring-boot-starter.version>
+        <xxl-job-core.version>2.4.0</xxl-job-core.version>
+        <rocketmq-spring-boot-starter.version>2.3.4</rocketmq-spring-boot-starter.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
+        <hutool.version>5.8.20</hutool.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <jjwt.version>0.12.6</jjwt.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--  Ensure that spring boot, spring cloud and spring cloud ali are mapped to their suitable version         -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--   doc         -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger-annotations-jakarta.version}</version>
+            </dependency>
+
+            <!--   tools         -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${common-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-servlet-api</artifactId>
+                <version>${tomcat-servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!--  database   -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>com.baomidou</groupId>-->
+            <!--                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>-->
+            <!--                <version>${dynamic-datasource-spring-boot-starter.version}</version>-->
+            <!--            </dependency>-->
+
+            <!--     test       -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainer.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${testcontainer.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.datafaker</groupId>
+                <artifactId>datafaker</artifactId>
+                <version>${datafaker.version}</version>
+                <!-- <scope>test</scope> -->
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter-test</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+                <scope>test</scope>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-test</artifactId>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.mockito</groupId>-->
+<!--                <artifactId>mockito-inline</artifactId>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
+
+            <!--     Redis       -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--     task schedule (xxl)       -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job-core.version}</version>
+            </dependency>
+
+            <!--   MQ         -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--   sub module dependencies         -->
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-data-mybatis</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-web</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-util</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-registry-nacos</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-banner</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-data-redis</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>hello-service</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>hello-service-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-web-security</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-data-jpa</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-mq-rocket</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-data-jdbc</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-mq-kafka</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eu.rainx0</groupId>
+                <artifactId>rain-core-starter-web-mybatis</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <!-- We don't use the springboot default pom config, so here
+        we have to specify in details -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.graalvm.buildtools</groupId>-->
+<!--                    <artifactId>native-maven-plugin</artifactId>-->
+<!--                    <version>${native-maven-plugin.version}</version>-->
+<!--                </plugin>-->
+            </plugins>
+        </pluginManagement>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>  <!-- ✅ 开启资源过滤, 以支持 application.yml 中使用 maven 中的变量 -->
+            </resource>
+        </resources>
+    </build>
+
+</project>

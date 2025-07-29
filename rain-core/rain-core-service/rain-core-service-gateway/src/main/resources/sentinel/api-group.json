@@ -1,0 +1,10 @@
+[
+  {
+    "apiName": "auth-api-group",
+    "predicateItems": [
+      {
+        "pattern": "/admin/login"
+      }
+    ]
+  }
+]

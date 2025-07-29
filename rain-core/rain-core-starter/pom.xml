@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rain-core</artifactId>
+        <groupId>org.eu.rainx0</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>rain-core-starter</artifactId>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>rain-core-starter-banner</module>
+        <module>rain-core-starter-web</module>
+        <module>rain-core-starter-log</module>
+        <module>rain-core-strater-async</module>
+        <module>rain-core-starter-data</module>
+        <module>rain-core-starter-web-mybatis</module>
+        <module>rain-core-starter-web-security</module>
+        <module>rain-core-starter-registry-nacos</module>
+        <module>rain-core-starter-util</module>
+        <module>rain-core-starter-email</module>
+        <module>rain-core-starter-web-static</module>
+        <module>rain-core-starter-web-feign</module>
+        <module>rain-core-starter-job</module>
+        <module>rain-core-starter-mq-kafka</module>
+        <module>rain-core-starter-mq-rocket</module>
+    </modules>
+
+    <dependencies>
+        <!--  @ComponentScan need this      -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-autoconfigure</artifactId>-->
+<!--        </dependency>-->
+
+    </dependencies>
+
+</project>

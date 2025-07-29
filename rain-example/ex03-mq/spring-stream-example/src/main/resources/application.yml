@@ -1,0 +1,26 @@
+server:
+  port: 9090
+spring:
+  cloud:
+    function:
+      definition: riskCheck, deductScore, notifyUser #明确指定启用哪些 function bean
+    stream:
+      rocketmq:
+        binder:
+          name-server: localhost:9876
+      bindings:
+        toRisk-out-0:  # producer
+          destination: order-event
+        riskCheck-in-0:
+          destination: order-event
+          group: risk-group
+        riskCheck-out-0:
+          destination: risk-passed-event
+        deductScore-in-0:
+          destination: risk-passed-event
+        deductScore-out-0:
+          destination: order-completed-event
+        notifyUser-in-0:
+          destination: order-completed-event
+          group: notify-group
+

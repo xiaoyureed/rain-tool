@@ -1,0 +1,33 @@
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_CFG_NODE_ID=0 # 当前 Kafka 节点的唯一 ID，必须唯一（KRaft 模式要求）
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker # 当前节点同时是控制器（Controller）和代理（Broker）
+      #定义两个监听端口：
+      #客户端访问用 PLAINTEXT（9092）
+      #控制器内部通信用 CONTROLLER（9093）
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      # 广告监听地址
+      # 告诉其他应用, 如何连接 Kafka
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      # 指定每个监听器使用的安全协议，这里都是明文（PLAINTEXT）
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093	# 指定控制器投票成员，格式为 node_id@host:port，这里只配置了一个节点
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER	# 指定哪个监听器用于 Controller 间通信
+    networks:
+      - app-tier
+  kafka-console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    ports:
+      - 8000:8080
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - app-tier

@@ -1,0 +1,12 @@
+server:
+  port: 9090
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true # 不懒加载, 默认只有在 resource client 被访问后才能在 dashboard 看到client
+      # 默认所有调用链是从一个统一上下文下展开的
+      # 这里配置为 false, 表示每个调用链都从自己的上下文展开
+      #主要是配合流控中的 "链路"模式一起使用
+      web-context-unify: false

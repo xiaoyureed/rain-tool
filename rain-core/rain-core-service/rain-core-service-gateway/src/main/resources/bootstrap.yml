@@ -1,0 +1,65 @@
+server:
+  port: 8888
+#  servlet:
+#    context-path: /@artifactId@
+spring:
+  application:
+    # this config shall work with maven resource filter
+    name: @artifactId@
+  cloud:
+    nacos:
+      server-addr: nacos-server:8848
+      username: nacos
+      password: nacos
+      config:
+        enabled: true
+        refresh-enabled: true # 是否动态刷新,默认为false
+        server-addr: ${spring.cloud.nacos.server-addr}
+        username: ${spring.cloud.nacos.username}
+        password: ${spring.cloud.nacos.password}
+        file-extension: yaml
+        namespace: ${spring.profiles.active:dev}  # 默认 public namespace
+
+        # For the common config, such as logging.yaml、redis.yaml, you can define them in shared-configs
+        # Lower priority than extension-configs
+        # shared-configs是一个集合
+        shared-configs:
+          # 网关 通用配置可以定义在这个里面
+          - dataId: demo-gateway.yaml # 配置文件名dataId
+            group: DEFAULT_GROUP  # 默认为DEFAULT_GROUP
+            refresh:  true
+
+        # 拆分主配置文件, 如 xxx-application.db.yaml、xxx-application.cache.yaml
+        #extension-configs:
+
+      discovery:
+        enabled: true
+        register-enabled: true # default. allow you to omit @enablediscoveryclient
+        server-addr: ${spring.cloud.nacos.server-addr}
+        username: ${spring.cloud.nacos.username}
+        password: ${spring.cloud.nacos.password}
+        namespace: public
+
+
+  profiles:
+    active: local
+
+
+logging:
+  level:
+    root: info
+
+---
+
+spring:
+  config:
+    # 引入 nacos 配置(默认引入 public namespace 下的文件)
+    #import: nacos:demo-gateway.yaml,nacos:demo-gateway1.yaml?group=DEFAULT_GROUP  # 可指定 group, namespace 在前面指定了
+    #
+    import:
+      # 引入本地文件, 不存在也不报错
+      - optional:file:${user.home}/.m2/demo-gateway.yaml
+      # 引入 classpath 文件
+      - optional:classpath:application1.yml
+    activate:
+      on-profile: local

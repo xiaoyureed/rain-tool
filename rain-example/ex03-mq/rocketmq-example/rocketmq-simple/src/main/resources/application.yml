@@ -1,0 +1,6 @@
+rocketmq:
+  # 使用 rocketMqTemplate 必须配置
+  name-server: localhost:9876
+  # 使用 rocketMqTemplate 必须配置
+  producer:
+    group: hah

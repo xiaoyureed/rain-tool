@@ -1,0 +1,11 @@
+server:
+  port: 9092
+spring:
+  application:
+    name: oauth2-resource-server
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+#          issuer-uri: http://localhost:9090  # 报错 401
+          issuer-uri: http://192.168.31.109:9090

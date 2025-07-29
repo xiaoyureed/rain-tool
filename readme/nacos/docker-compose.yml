@@ -1,0 +1,14 @@
+services:
+  nacos:
+    image: nacos/nacos-server:latest
+    environment:
+      MODE: standalone
+      NACOS_AUTH_TOKEN: VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+      NACOS_AUTH_IDENTITY_KEY: serverIdentity
+      NACOS_AUTH_IDENTITY_VALUE: security
+    ports:
+      - "8080:8080" # web console
+      - "8848:8848" # http conn
+      - "9848:9848" # grpc conn
+    restart: unless-stopped
+

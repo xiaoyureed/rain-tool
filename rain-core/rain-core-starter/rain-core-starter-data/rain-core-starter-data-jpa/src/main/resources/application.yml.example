@@ -1,0 +1,18 @@
+spring:
+  flyway:
+    enabled: true  # default;
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hello
+    username: root
+    password: root123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false # default to true, 这里表示关闭open in view, 使用我们自己声明的事务
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -1,0 +1,33 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: oauth2-client
+  security:
+    oauth2:
+      client:
+        registration:
+          hi_registration:  # registrationId, 在 方法参数中可通过@RegisteredOAuth2AuthorizedClient(registrationId) 注入
+            client-id: hi
+            client-secret: 123
+            scope: read
+            # redirect-uri有固定格式 {baseUrl}/login/oauth2/code/{registrationId}, 框架才能自动处理从 code 到 Token 的获取流程
+#            redirect-uri: http://localhost:9091/login/oauth2/code/hi_registration
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            provider: auth-server   # 引用的providerId
+
+        provider:
+          auth-server:    # provider id
+            # note: 保证这里配置的域要区别于 client app 自身的域名, 否则会造成 session 覆盖
+            authorization-uri: http://192.168.31.109:9090/oauth2/authorize
+            token-uri: http://192.168.31.109:9090/oauth2/token
+            issuer-uri: http://192.168.31.109:9090
+            user-info-uri: http://192.168.31.109:9090/userinfo
+            user-name-attribute: sub   # 默认
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG

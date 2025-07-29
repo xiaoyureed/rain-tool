@@ -1,0 +1,19 @@
+[
+  // 这种 mode 是针对某一个 service 而言的
+  {
+    // resource name, routes.id for 网关 case, api-group name for api 分组 case
+    "resource": "route-rain-core-service-authorization",
+    // 0 for 网关, 1 for api 分组
+    "resourceMode": 0,
+    // 60s 内只能 call 5 次
+    "intervalSec": 60,
+    "count": 5
+  },
+  // 这种 mode 是针对某个 api group 的 (group 在 api-group.json 中指定)
+  {
+    "resource": "auth-api-group",
+    "resourceMode": 1,
+    "intervalSec": 60,
+    "count": 1
+  }
+]

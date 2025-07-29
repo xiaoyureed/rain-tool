@@ -1,0 +1,19 @@
+server:
+  port: 9090
+spring:
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # default to string serializer
+      key-serializer:
+#    consumer:
+#      max-poll-records: 500 # 单次消费者拉取的最大数据条数，默认值500。
+#      # 配置消费者重连时, offset 重置的规则 (这里是: 消费者重连会重新接收最开始的消息, 最保险, 但是需要 consumer 做幂等性处理)
+#      auto-offset-reset: earliest
+#      # 禁用offset 自动提交, 自己手动提交防止消息丢失
+#      enable-auto-commit: false
+
+#logging.level:
+#    org.springframework.kafka: DEBUG

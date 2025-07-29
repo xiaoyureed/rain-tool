@@ -1,0 +1,15 @@
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs          # json 地址
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html      # UI 地址
+    tags-sorter: alpha          # api 排序
+    operations-sorter: alpha
+  show-actuator: true           # 如想显示 actuator 端点
+server:
+  port: 9090
+  servlet:
+    context-path: /ex0

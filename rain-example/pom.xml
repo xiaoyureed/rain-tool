@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rain-tool</artifactId>
+        <groupId>org.eu.rainx0</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>rain-example</artifactId>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>hello-service</module>
+        <module>hello-service-api</module>
+        <module>ex01-security-simple</module>
+        <module>ex02-oauth2</module>
+        <module>ex00-springdoc</module>
+        <module>ex02-oauth2/oauth2-auth-server</module>
+        <module>ex02-oauth2/oauth2-resource-server</module>
+        <module>ex02-oauth2/oauth2-client</module>
+        <module>match-engine</module>
+        <module>ex03-mq</module>
+        <module>ex04-dubbo</module>
+        <module>ex05-sentinel</module>
+    </modules>
+
+</project>

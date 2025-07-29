@@ -1,0 +1,14 @@
+[
+  {
+    "resource": "route-rain-core-service-authorization",
+    "resourceMode": 0,
+    "intervalSec": 60,
+    "count": 5
+  },
+  {
+    "resource": "auth-api-group",
+    "resourceMode": 1,
+    "intervalSec": 60,
+    "count": 1
+  }
+]
