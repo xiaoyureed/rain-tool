@@ -1,4 +1,10 @@
 spring:
+
+
+  profiles:
+    active: local
+    include: route
+
   main:
     allow-bean-definition-overriding: true # default to false; 允许同名的 bean 定义覆盖
     allow-circular-references: false # default to true;
@@ -20,61 +26,17 @@ spring:
           # default to "route-"; 若不指定 route id, 这个配置用来指定自动生成的id 前缀, 方便日志监控中识别路由
           #route-id-prefix: my-route-
           filters:
-            # 表示去掉第一级路径前缀, 如访问 http://gateway-server/order-service/api/hello, 发送到实际服务的路径是 /api/hello（去掉了 /order-service）
+            # 表示去掉第一级路径前缀, 如访问 http://gateway-server/order-service/api/hello,
+            #      发送到实际服务的路径是 /api/hello（去掉了 /order-service）
             - StripPrefix=1
 
-      #default-filters:  # 默认即被应用到所有 route 的 filter
       filter:
         rewrite-path:
           enabled: true # default to true
 
-#      # 手动配置 route 规则
-#      routes:
-#        - id: service-biz-hello_router
-#          uri: lb://service-biz-hello   # where to go
-#          predicates:    # handling what kind of request
-#            #
-#            # 等同Path=xxx,true 表示请求路径末尾的"/"模糊匹配, 即无论是否有 "/" 都能匹配,
-#            # Path=xxx,false 表示严格匹配 ; https://stackoverflow.com/questions/62493309/whats-the-use-of-matchoptionaltrailingseparator-in-spring-cloud-gateway-predica
-#            - Path=/service-biz-hello/**
-#          #filters:
-#          #  - RewritePath=/service-biz-hello/?(?<remaining>.*), /$\{remaining}
-#
-#        - id: openapi-self_router
-#          uri: lb://service-support-gateway
-#          predicates:
-#            - Path=/service-support-gateway/**
-#
-#        - id: example-spring-cloud-nacos
-#          uri: lb://example-spring-cloud-nacos
-#          predicates:
-#            - Path=/example-spring-cloud-nacos/**
-#
-#
-#        - id: blog
-#          uri: https://xiaoyureed.github.io
-#          predicates:
-#            - name: Path
-#              args:
-#                pattern: /blog  # notice: the slash at the end is sensitive
-#                matchOptionalTrailingSeparator: true # 表示请求路径末尾的"/"模糊匹配
-#
-#        # proxy baidu
-#        - id: baidu
-#          uri: https://www.baidu.com
-#          predicates:
-#            - Path=/baidu/
-#
-#        # redirect baidu
-#        - id: baidu-redirect
-#          uri: https://www.Abaidu.com
-#          predicates:
-#            - Path=/redirect/**
-#          filters:
-#            - name: RedirectTo
-#              args:
-#                status: 301
-#                url: https://www.Bbaidu.com # redirect to this url, make sure this url is correct
+      # 默认即被应用到所有 route 的 filter
+      #default-filters:
+
 
     sentinel:
       # This is a map<String, xxx>

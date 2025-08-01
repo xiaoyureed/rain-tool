@@ -2,8 +2,7 @@ package org.eu.rainx0.raintool.core.starter.data.jpa.config;
 
 import java.util.Optional;
 
-import org.eu.rainx0.raintool.core.common.context.LoginContext;
-import org.eu.rainx0.raintool.core.common.model.ILoginInfo;
+import org.eu.rainx0.raintool.core.common.context.LoginHolder;
 import org.eu.rainx0.raintool.core.common.model.LoginInfo;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +34,7 @@ public class JpaConfig {
         return () -> {
 
             try {
-                LoginInfo loginInfo = LoginContext.get(LoginInfo.class);
+                LoginInfo loginInfo = LoginHolder.get(LoginInfo.class);
                 return Optional.ofNullable(loginInfo).map(LoginInfo::getUsername);
             } catch (Exception e) {
                 return Optional.empty();

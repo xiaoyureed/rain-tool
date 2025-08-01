@@ -1,15 +1,10 @@
 package org.eu.rainx0.raintool.core.starter.data.mybatis.x;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
 
 import org.apache.ibatis.reflection.MetaObject;
-import org.eu.rainx0.raintool.core.common.context.LoginContext;
-import org.eu.rainx0.raintool.core.starter.data.mybatis.model.AbstractAuditEntity;
+import org.eu.rainx0.raintool.core.common.context.LoginHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -77,7 +72,7 @@ public class AutoFillHandler implements MetaObjectHandler {
     }
 
     private static String curUserId() {
-        String currentUserId = LoginContext.get(String.class);
+        String currentUserId = LoginHolder.get(String.class);
 
         if (StringUtils.hasText(currentUserId)) {
             return currentUserId;

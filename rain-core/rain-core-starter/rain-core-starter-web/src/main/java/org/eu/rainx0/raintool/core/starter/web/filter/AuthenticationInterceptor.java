@@ -2,7 +2,7 @@ package org.eu.rainx0.raintool.core.starter.web.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eu.rainx0.raintool.core.common.Consts;
-import org.eu.rainx0.raintool.core.common.context.LoginContext;
+import org.eu.rainx0.raintool.core.common.context.LoginHolder;
 import org.eu.rainx0.raintool.core.common.exception.BizException;
 import org.eu.rainx0.raintool.core.common.util.JwtTools;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +48,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        LoginContext.clear();
+        LoginHolder.clear();
     }
 
 

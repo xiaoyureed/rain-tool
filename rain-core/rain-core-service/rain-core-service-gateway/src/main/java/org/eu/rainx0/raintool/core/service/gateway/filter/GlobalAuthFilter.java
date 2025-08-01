@@ -47,7 +47,7 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
 
         String url = request.getURI().getPath();
-        List<String> whiteList = gatewayProps.getWhiteList();
+        List<String> whiteList = gatewayProps.getAuth().getWhiteList();
         if (WebFluxUtils.isPathMatch(whiteList, url)) {
             return chain.filter(exchange);
         }
@@ -91,7 +91,7 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return FilterOrderConsts.GLOBAL_AUTH_FILTER_ORDER;
+        return FilterConsts.GLOBAL_AUTH_FILTER_ORDER;
     }
 
 

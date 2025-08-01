@@ -4,7 +4,7 @@ package org.eu.rainx0.raintool.core.common.context;
  * @author: xiaoyu
  * @time: 2025/6/30 09:42
  */
-public class LoginContext {
+public class LoginHolder {
     private static final String USER_KEY = "user";
 
     public static void set(Object user) {

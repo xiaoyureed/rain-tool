@@ -1,5 +1,6 @@
 package org.eu.rainx0.raintool.core.service.gateway.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,11 +16,10 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "rain.gateway")
 @Data
 public class GatewayProps {
-    private List<String> whiteList;
 
-    private Auth auth;
+    private Auth auth = new Auth();
 
-    private Trace trace;
+    private Trace trace = new Trace();
 
     @Data
     public static class Trace {
@@ -40,5 +40,6 @@ public class GatewayProps {
     @Data
     public static class Auth {
         private boolean enabled = true;
+        private List<String> whiteList = new ArrayList<>();
     }
 }

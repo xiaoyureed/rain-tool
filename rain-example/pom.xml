@@ -25,6 +25,8 @@
         <module>ex03-mq</module>
         <module>ex04-dubbo</module>
         <module>ex05-sentinel</module>
+        <module>ex06-tx</module>
+        <module>ex07-mqtt</module>
     </modules>
 
 </project>

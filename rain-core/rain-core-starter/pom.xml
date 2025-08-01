@@ -28,6 +28,8 @@
         <module>rain-core-starter-job</module>
         <module>rain-core-starter-mq-kafka</module>
         <module>rain-core-starter-mq-rocket</module>
+        <module>rain-core-starter-tx</module>
+        <module>rain-core-starter-mq-mqtt</module>
     </modules>
 
     <dependencies>

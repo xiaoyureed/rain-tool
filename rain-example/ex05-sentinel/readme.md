@@ -34,10 +34,18 @@
   来源访问限流 (AuthorityRule)
     只允许指定上游/下游
 
-默认所有 web api 还有 openfeign client 都是 Sentinel 资源, 
-普通自定义方法若需要控制, 需要手动 @SentinelResource("xxx", blockHandler = "blockHandlerFunction", fallback = "xxxFallbackFunc") 进行标注
-  blockHandlerFunction(..., BlockException ex) 函数参数基本和该受控自定义方法一致, 最后一个参数为 BlockException
-  fallback 指定的方法是处理 通用异常的, 优先级没有 blockHandler 高
-  
-  若blockHandler/fallback 均没有指定, 会抛出 BlockException到上层, 可以在 @ControllerAdvice 中处理
+
+
+配置方式:
+
+- 默认所有 web api 还有 openfeign client 都是 Sentinel 资源, 可以设置流控策略
+
+- 普通自定义方法若需要控制, 需要手动 @SentinelResource("xxx", blockHandler = "blockHandlerFunction", fallback = "xxxFallbackFunc") 定义一个资源
+
+      - blockHandlerFunction(..., BlockException ex) 函数参数基本和该受控自定义方法一致, 最后一个参数为 BlockException
+      - fallback 指定的方法是处理 通用异常的 (即最后一个参数/异常 是通用异常 Exception)
+          优先级没有 blockHandler 高
+      - 若blockHandler/fallback 均没有指定, 会抛出 BlockException到上层, 可以在 @ControllerAdvice 中处理
+      
+          也可实现 BlockExceptionHandler @bean 处理异常
 ```

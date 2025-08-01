@@ -66,6 +66,6 @@ public class GlobalCacheBodyFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return FilterOrderConsts.GLOBAL_CACHE_BODY_FILTER_ORDER;
+        return FilterConsts.GLOBAL_CACHE_BODY_FILTER_ORDER;
     }
 }

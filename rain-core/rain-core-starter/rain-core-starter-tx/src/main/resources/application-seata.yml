@@ -1,0 +1,2 @@
+seata:
+  tx-service-group: default_tx_group  # 为了 Seata server 高可用, 这里保持默认值

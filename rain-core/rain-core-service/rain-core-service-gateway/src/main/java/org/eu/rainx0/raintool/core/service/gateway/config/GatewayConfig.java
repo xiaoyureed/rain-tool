@@ -33,6 +33,11 @@ public class GatewayConfig {
     private static final String MAX_AGE = "18000L";
 
     /**
+     * 跨域:
+     * <p>
+     * - 每个 controller 中标注 @CrossOrigin
+     * - 配置文件中通过 globalcors 配置
+     * <p>
      * 用WebFilter 更好
      */
 //    @Bean
@@ -40,8 +45,8 @@ public class GatewayConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedOrigins(List.of("*"));
-//        config.setAllowedMethods( List.of( "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" ) );
-//        config.setAllowedHeaders( List.of( "origin", "content-type", "accept", "authorization", "cookie" ) );
+        // config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        // config.setAllowedHeaders(List.of("origin", "content-type", "accept", "authorization", "cookie"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(List.of("*"));
 

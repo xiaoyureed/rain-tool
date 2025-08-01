@@ -41,13 +41,10 @@ spring:
         namespace: public
 
 
-  profiles:
-    active: local
-
-
 logging:
   level:
     root: info
+    org.eu.rainx0.raintool: debug
 
 ---
 

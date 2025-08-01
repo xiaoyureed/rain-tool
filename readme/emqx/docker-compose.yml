@@ -1,0 +1,18 @@
+services:
+  emqx:
+    image: emqx/emqx-enterprise:5.10.0
+    restart: unless-stopped
+    ports:
+      - "1883:1883"    # MQTT 协议 tcp 端口
+      - "8083:8083"    # WebSocket 端口
+      - "8084:8084"    # WebSocket SSL
+      - "8883:8883"    # MQTT SSL/TLS
+      - "18083:18083"  # Dashboard 管理界面 , 登录:  admin/public
+    volumes:
+      - emqx_data:/opt/emqx/data
+      - emqx_log:/opt/emqx/log
+      - emqx_etc:/opt/emqx/etc
+volumes:
+  emqx_data:
+  emqx_log:
+  emqx_etc:

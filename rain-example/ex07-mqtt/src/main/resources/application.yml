@@ -1,0 +1,13 @@
+rain:
+  mqtt:
+    broker-url: tcp://localhost:1883
+    sub-topics: hi/1
+server:
+  port: 9090
+spring:
+  application:
+    name: @artifactId@
+
+logging:
+  level:
+    org.eu.rainx0.raintool: debug

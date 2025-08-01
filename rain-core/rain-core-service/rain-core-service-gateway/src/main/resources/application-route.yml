@@ -1,0 +1,43 @@
+spring.cloud.gateway:
+      # 手动配置 route 规则, 存在先后顺序(匹配上就不再继续往下匹配了)
+      routes:
+        - id: service-biz-hello_route
+          #order: 0     # 可通过 order 手动控制顺序
+          uri: lb://service-biz-hello   # where to go
+          # 决定处理哪些符合要求的请求 (短写法)
+          predicates:
+            # 等同Path=xxx,true 表示请求路径末尾的"/"模糊匹配, 即无论是否有 "/" 都能匹配,
+            #    Path=xxx,false 表示严格匹配 ; https://stackoverflow.com/questions/62493309/whats-the-use-of-matchoptionaltrailingseparator-in-spring-cloud-gateway-predica
+            - Path=/service-biz-hello/**
+
+          filters:
+            # 路径重写 (去掉 "/service-biz-hello" 部分)
+            - RewritePath=/service-biz-hello/?(?<remaining>.*), /$\{remaining}
+            #添加响应头
+            - AddResponseHeader=X-Response-Time,$(new java.util.Date().getTime())
+
+
+        - id: baidu-search_route
+          uri: https://www.baidu.com
+          # 全写法
+          predicates:
+            - name: Path
+              args:
+                patterns: /s  # notice: the slash at the end is sensitive
+                matchTrailingSlash: true # 表示请求路径末尾的"/"模糊匹配
+            # 必须携带参数 wd=hah
+            - name: Query
+              args:
+                param: wd
+                regexp: hah
+
+        # redirect baidu
+        - id: baidu-redirect
+          uri: https://www.baidu.com
+          predicates:
+            - Path=/redirect/**
+          filters:
+            - name: RedirectTo
+              args:
+                status: 301
+                url: https://www.baidu.com # redirect to this url, make sure this url is correct

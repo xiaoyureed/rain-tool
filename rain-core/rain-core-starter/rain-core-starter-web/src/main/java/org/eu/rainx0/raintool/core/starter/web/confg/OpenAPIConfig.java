@@ -63,9 +63,9 @@ public class OpenAPIConfig {
     @Value("${server.port:8080}")
     private String port;
 
-    @Value("${spring.h2.console.enabled}")
+    @Value("${spring.h2.console.enabled:false}")
     private boolean h2ConsoleEnabled;
-    @Value("${spring.h2.console.path}")
+    @Value("${spring.h2.console.path:''}")
     private String h2ConsolePath;
 
 
@@ -120,20 +120,20 @@ public class OpenAPIConfig {
             String profile = SpringContextTools.getPrettyActiveProfiles();
             String remoteUrl = "http://" + host + ":" + port + contextPath + swaggerUiPath;
             String localUrl = "http://localhost:" + port + contextPath + swaggerUiPath;
-            String h2console = h2ConsoleEnabled ? "http://" + host + ":" + port + h2ConsolePath : "";
 
             log.info("\n----------------------------------------------------------\n" +
                     "\t Application: '{}' is running! \n" +
-                    "\t Environment: {} \n" +
+                    "\t Environment: {}\n" +
                     "\t Spring Doc:  {}\n" +
                     "\t              {}\n" +
-                    "\t H2 console:  {}\n" +
-                    "----------------------------------------------------------",
+                    (h2ConsoleEnabled ?
+                            "\t H2 console:  "+ "http://" + host + ":" + port + h2ConsolePath
+                            : "" ) +
+                    "\n----------------------------------------------------------\n",
                 applicationName,
                 profile,
                 remoteUrl,
-                localUrl,
-                h2console
+                localUrl
             );
         };
     }
