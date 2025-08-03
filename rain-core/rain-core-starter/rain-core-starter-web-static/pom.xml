@@ -23,4 +23,41 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+<!--                <version>3.2.0</version>-->
+                <executions>
+
+                    <!-- 注意：这个 ID 是默认绑定的 execution ID, 会覆盖默认行为 -->
+<!--                    <execution>-->
+<!--                        <id>default-resources</id>-->
+<!--                        <phase>none</phase> &lt;!&ndash; 禁用它 &ndash;&gt;-->
+<!--                    </execution>-->
+
+                    <!--不会覆盖默认的行为-->
+                    <execution>
+                        <id>copy-react</id>
+                        <phase>process-resources</phase>
+                        <goals><goal>copy-resources</goal></goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--todo: 待修改.
+                                    这里的路径是相对于 pom 文件的路径
+                                    静态资源（JS/HTML/CSS）必须关闭 filtering, React 构建后的静态文件（比如 JS/CSS/HTML）中有大量的 $ 符号和模板语法
+                                    -->
+                                    <directory>../frontend/build</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

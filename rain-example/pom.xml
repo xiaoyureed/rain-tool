@@ -27,6 +27,7 @@
         <module>ex05-sentinel</module>
         <module>ex06-tx</module>
         <module>ex07-mqtt</module>
+        <module>ex08-netty</module>
     </modules>
 
 </project>

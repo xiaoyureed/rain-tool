@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eu.rainx0</groupId>
+        <artifactId>rain-example</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ex08-netty</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+    </dependencies>
+<!--
+
+https://www.bilibili.com/video/BV1QD5Nz9EXB?spm_id_from=333.788.videopod.episodes&vd_source=c2f975abf353677cb814e38e073b6a75&p=9
+https://www.bilibili.com/video/BV1hzWGeMEEp/?spm_id_from=333.337.search-card.all.click&vd_source=c2f975abf353677cb814e38e073b6a75
+-->
+</project>

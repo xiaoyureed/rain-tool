@@ -1,6 +1,7 @@
-package org.eu.rainx0.raintool.core.starter.webstatic;
+package org.eu.rainx0.raintool.core.starter.webstatic.config;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
@@ -13,18 +14,28 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author: xiaoyu
- * @time: 2025/7/1 13:39
+ *
  */
 @Configuration
-@ConditionalOnProperty(prefix = "core.starter.webstatic", name = "enabled", havingValue = "true")
-public class StaticResourceConfiguration implements WebMvcConfigurer {
+@ConditionalOnProperty(prefix = "rain.web-static", name = "enabled", havingValue = "true", matchIfMissing = true)
+public class WebStaticConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private WebStaticProps props;
+
     /**
-     * To serve the nextjs static resources directly without going through the backend
+     * To serve the nextjs static resources directly
+     * without going through spring mvc
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        if (props.isNoBackendLogic()) {
+            registry.addResourceHandler("/**")
+                    //不要用反斜杠 \\，就用斜杠 / 即可。另外，路径须以斜杠 / 结尾
+                    // 也支持本地文件路径, file:xxx 即可
+                    .addResourceLocations("classpath:/static/");
+
+        }
     }
 
     /**
