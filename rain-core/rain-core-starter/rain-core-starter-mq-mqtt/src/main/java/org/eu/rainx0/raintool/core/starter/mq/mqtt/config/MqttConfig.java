@@ -4,6 +4,9 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.integration.config.EnableIntegration;
+import org.springframework.integration.config.EnableIntegrationManagement;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 
@@ -17,6 +20,8 @@ import java.util.Optional;
  * @time 2025/8/1 16:55
  */
 @Configuration
+@EnableIntegration // 开启 Spring Integration 基础设施
+@IntegrationComponentScan({"org.eu.rainx0.raintool.core.starter.mq.mqtt.outbound"}) // 专门扫描 @MessagingGateway 接口并注册代理
 public class MqttConfig {
 
     @Autowired

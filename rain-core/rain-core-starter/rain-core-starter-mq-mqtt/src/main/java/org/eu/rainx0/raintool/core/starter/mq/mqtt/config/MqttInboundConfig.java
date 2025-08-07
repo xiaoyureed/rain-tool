@@ -40,7 +40,7 @@ public class MqttInboundConfig {
     // 收到消息后, 通过mqttInboundChannel 发送到 msg Handler 处理
     @Bean
     MessageProducer mqttInboundAdaptor(MqttPahoClientFactory clientFactory) {
-        MqttPahoMessageDrivenChannelAdapter producer = new MqttPahoMessageDrivenChannelAdapter(
+        MqttPahoMessageDrivenChannelAdapter inboundAdaptor = new MqttPahoMessageDrivenChannelAdapter(
                 mqttProps.getBrokerUrl(),
                 mqttProps.getClientId() + "-inbound",
                 clientFactory,
@@ -51,15 +51,15 @@ public class MqttInboundConfig {
             log.debug(";;Subscribing to MQTT topics: {}", (Object[]) mqttProps.getSubTopics());
         }
 
-        producer.setQos(1);
-        producer.setConverter(new DefaultPahoMessageConverter());
+        inboundAdaptor.setQos(1);
+        inboundAdaptor.setConverter(new DefaultPahoMessageConverter());
         // 将 producer的输出 channel 接到我们的 mqttInboundChannel
-        producer.setOutputChannel(mqttInboundChannel());
+        inboundAdaptor.setOutputChannel(mqttInboundChannel());
 
         // app 启动,自动连接到 broker 并开始订阅指定的主题, 默认就是 true
-        producer.setAutoStartup(true);
+        inboundAdaptor.setAutoStartup(true);
 
-        return producer;
+        return inboundAdaptor;
     }
 
     // 处理器

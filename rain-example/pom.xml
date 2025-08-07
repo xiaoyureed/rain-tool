@@ -27,7 +27,8 @@
         <module>ex05-sentinel</module>
         <module>ex06-tx</module>
         <module>ex07-mqtt</module>
-        <module>ex08-netty</module>
+        <module>ex09-influxdb</module>
+        <module>ex09-javaagent</module>
     </modules>
 
 </project>

@@ -24,7 +24,7 @@
         <module>rain-core-starter-util</module>
         <module>rain-core-starter-email</module>
         <module>rain-core-starter-web-static</module>
-        <module>rain-core-starter-web-feign</module>
+        <module>rain-core-starter-feign</module>
         <module>rain-core-starter-job</module>
         <module>rain-core-starter-mq-kafka</module>
         <module>rain-core-starter-mq-rocket</module>

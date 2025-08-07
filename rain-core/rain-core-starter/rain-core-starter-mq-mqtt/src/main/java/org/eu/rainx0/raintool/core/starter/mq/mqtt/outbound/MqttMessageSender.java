@@ -1,13 +1,14 @@
 package org.eu.rainx0.raintool.core.starter.mq.mqtt.outbound;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
  * @author xiaoyu
  * @time 2025/8/1 18:51
  */
-//@Component
+@Component
 public class MqttMessageSender {
     @Autowired
     private MessageOutboundGateway messageOutboundGateway;

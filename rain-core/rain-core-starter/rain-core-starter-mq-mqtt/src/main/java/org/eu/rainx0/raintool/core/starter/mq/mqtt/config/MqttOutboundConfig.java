@@ -42,7 +42,7 @@ public class MqttOutboundConfig {
                 clientFactory
         );
 
-        handler.setDefaultQos(0);
+        handler.setDefaultQos(1);
         handler.setDefaultTopic("default");
         handler.setAsync(true);
 

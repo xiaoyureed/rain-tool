@@ -1,0 +1,11 @@
+syntax = "proto3";
+option java_package = "org.eu.rainx0.raintool.ex.mqtt.netty.protobuf";
+option java_outer_classname = "UserProto";
+
+//  protoc -I=src/main/proto --java_out=src/main/java User.proto
+message UserMsg {
+  int32 id = 1;
+  string name = 2;
+  int32 age = 3;
+  int32 state = 4;
+}
