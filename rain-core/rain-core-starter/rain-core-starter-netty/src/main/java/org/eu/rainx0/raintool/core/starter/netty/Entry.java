@@ -2,6 +2,7 @@ package org.eu.rainx0.raintool.core.starter.netty;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author xiaoyu
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan
 @Slf4j
+@EnableAsync
 public class Entry {
     {
         log.debug(";;Netty starter loaded.");

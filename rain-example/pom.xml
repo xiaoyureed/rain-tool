@@ -29,6 +29,7 @@
         <module>ex07-mqtt</module>
         <module>ex09-influxdb</module>
         <module>ex09-javaagent</module>
+        <module>ex07-websocket</module>
     </modules>
 
 </project>

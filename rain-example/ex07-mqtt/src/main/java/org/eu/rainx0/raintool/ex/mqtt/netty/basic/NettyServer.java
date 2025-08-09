@@ -10,6 +10,8 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
@@ -32,12 +34,15 @@ public class NettyServer {
                     //服务端可连接队列数,对应TCP/IP协议listen函数中backlog参数
                     // 多个 client 同时连接, 将不能处理的 client 放入队列, 容量 1024
                     .option(ChannelOption.SO_BACKLOG, 1024)
-//                    .localAddress(new InetSocketAddress(9090))
+                    //.localAddress(new InetSocketAddress(9090))
+                    // 日志
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             // 为 workers 中的 socket channel 设置处理器
                             socketChannel.pipeline()
+                                    .addLast(new LoggingHandler(LogLevel.INFO))
                                     // 以("\n")为结尾分割的 解码器
                                     .addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()))
                                     .addLast("decoder", new StringDecoder())
@@ -53,6 +58,8 @@ public class NettyServer {
                     ;
 
             // 异步操作, 绑定端口
+            // 得到的是 ServerSocketChannel 的一个 Future
+            // 代表 client 的是 SocketChannel, 若断开, 不会影响 ServerSocketChannel
             ChannelFuture fu = bootstrap.bind(9090);
             //判断异步操作是否完成
 //        boolean done = fu.isDone();

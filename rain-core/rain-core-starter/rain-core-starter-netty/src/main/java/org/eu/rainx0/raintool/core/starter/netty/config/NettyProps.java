@@ -23,7 +23,8 @@ public class NettyProps {
 
     @Data
     static class Server {
-        private int port;
+        private Integer port;
+        private String  contextPath = "/ws";
         private int maxReadIdleSeconds = 10;
 
     }

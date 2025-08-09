@@ -43,6 +43,13 @@ public class NettyClient {
 
                     }
                 });
+        /**
+         * 都会阻塞直到操作完成
+         *
+         * sync() 异常会被正常抛出
+         * await()   不重新抛出异常
+         *      需要通过ChannelFuture.isSuccess(), ChannelFuture.cause() 来获取异常
+         */
         ChannelFuture fu = boot.connect("localhost", 9090).sync();
         System.out.println("connected to server");
 
@@ -56,6 +63,9 @@ public class NettyClient {
     }
 
     static class ClientHandler extends ChannelInboundHandlerAdapter {
+
+        private ByteBuf buf;
+
         // 连接建立后触发
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -65,7 +75,15 @@ public class NettyClient {
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-            ByteBuf buf = (ByteBuf) msg;
+            ByteBuf m = (ByteBuf) msg;
+            buf.writeBytes(m);
+            m.release();
+
+//            if (buf.readableBytes() >= 4) { // 已经凑够4个byte，将4个byte组合称为一个int
+//                long result = buf.readUnsignedInt();
+//                ctx.close();
+//            }
+
             System.out.println("Got: " + buf.toString(StandardCharsets.UTF_8));
         }
 
@@ -73,6 +91,23 @@ public class NettyClient {
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
             System.out.println(cause.getMessage());
             ctx.close(); // 关闭 channel
+        }
+
+        // handler 被添加时触发
+        // 可用来做 Handler 的初始化
+        @Override
+        public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+            buf = ctx.alloc().buffer(4); // 4字节
+
+            super.handlerAdded(ctx);
+        }
+
+        // handler 移除时触发, 可对缓冲区进行清理
+        @Override
+        public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+            buf.release();
+            buf = null;
+            super.handlerRemoved(ctx);
         }
     }
 }

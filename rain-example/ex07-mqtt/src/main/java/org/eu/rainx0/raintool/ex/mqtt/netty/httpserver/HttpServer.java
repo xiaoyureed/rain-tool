@@ -8,6 +8,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.CharsetUtil;
 
 import java.net.InetAddress;
@@ -26,6 +28,7 @@ public class HttpServer {
     public static void main(String[] args) throws InterruptedException {
         boot.channel(NioServerSocketChannel.class)
                 .group(boss, worker)
+                .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
@@ -54,13 +57,31 @@ public class HttpServer {
 
     static class Handler extends ChannelInboundHandlerAdapter {
 
-        private void sendResp(ChannelHandlerContext ctx,
-                              String content,
-                              HttpResponseStatus status) {
-            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=UTF-8");
+        private void sendResp(
+                ChannelHandlerContext ctx,
+                String content,
+                HttpResponseStatus status,
+                HttpVersion ver,
+                boolean keepAlive // 是否保持长连接
+        ) {
+            if (ver == null) {
+                ver = HttpVersion.HTTP_1_1;
+            }
+            FullHttpResponse response = new DefaultFullHttpResponse(ver, status, Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
+            response.headers()
+                    .set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=UTF-8")
+                    .set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes())
+            ;
+
+            if (keepAlive) {
+                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+            } else {
+                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+            }
+
             ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
         }
+
 
         private String getBody(FullHttpRequest request) {
             ByteBuf buf = request.content();
@@ -80,17 +101,18 @@ public class HttpServer {
             // 因为使用了 HttpObjectAggregator，这里可以直接强转为 FullHttpRequest
             if (!(msg instanceof FullHttpRequest httpRequest)) {
                 result = "未知请求!";
-                sendResp(ctx, result, HttpResponseStatus.BAD_REQUEST);
+                sendResp(ctx, result, HttpResponseStatus.BAD_REQUEST, null, false);
                 return;
             }
             try {
+                boolean keepAlive = HttpUtil.isKeepAlive(httpRequest);
                 String path = httpRequest.uri();            //获取路径
                 String body = getBody(httpRequest);    //获取参数
                 HttpMethod method = httpRequest.method();//获取请求方法
                 //如果不是这个路径，就直接返回错误
                 if (!"/test".equalsIgnoreCase(path)) {
                     result = "非法请求!";
-                    sendResp(ctx, result, HttpResponseStatus.BAD_REQUEST);
+                    sendResp(ctx, result, HttpResponseStatus.BAD_REQUEST, httpRequest.protocolVersion(), keepAlive);
                     return;
                 }
                 System.out.println("接收到:" + method + " 请求");
@@ -99,7 +121,7 @@ public class HttpServer {
                     //接受到的消息，做业务逻辑处理...
                     System.out.println("body:" + body);
                     result = "GET请求";
-                    sendResp(ctx, result, HttpResponseStatus.OK);
+                    sendResp(ctx, result, HttpResponseStatus.OK, httpRequest.protocolVersion(), keepAlive);
                     return;
                 }
                 //如果是POST请求
@@ -107,7 +129,7 @@ public class HttpServer {
                     //接受到的消息，做业务逻辑处理...
                     System.out.println("body:" + body);
                     result = "POST请求";
-                    sendResp(ctx, result, HttpResponseStatus.OK);
+                    sendResp(ctx, result, HttpResponseStatus.OK, httpRequest.protocolVersion(), keepAlive);
                     return;
                 }
 
@@ -116,7 +138,7 @@ public class HttpServer {
                     //接受到的消息，做业务逻辑处理...
                     System.out.println("body:" + body);
                     result = "PUT请求";
-                    sendResp(ctx, result, HttpResponseStatus.OK);
+                    sendResp(ctx, result, HttpResponseStatus.OK, httpRequest.protocolVersion(), keepAlive);
                     return;
                 }
                 //如果是DELETE请求
@@ -124,7 +146,7 @@ public class HttpServer {
                     //接受到的消息，做业务逻辑处理...
                     System.out.println("body:" + body);
                     result = "DELETE请求";
-                    sendResp(ctx, result, HttpResponseStatus.OK);
+                    sendResp(ctx, result, HttpResponseStatus.OK, httpRequest.protocolVersion(), keepAlive);
                     return;
                 }
             } catch (Exception e) {
